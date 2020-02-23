@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view/>
   </div>
 </template>
@@ -13,8 +9,25 @@
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+/*  text-align: center;*/
   color: #2c3e50;
+}
+
+/* 设置了浏览器宽度不大于599时要采用的样式 */
+@media screen and (max-width: 500px){
+  body{
+    width:100%;
+  }
+}
+/* 设置了浏览器宽度不小于600时要采用的样式*/
+@media screen and (min-width: 501px) {
+  html,body{
+    width:500px;
+    margin:0 auto;
+    -webkit-box-shadow: 0px 0px 50px #ff9a00 ;
+    -moz-box-shadow: 0px 0px 50px #ff9a00 ; /* 老的 Firefox */
+    box-shadow: 0px 0px 50px #ff9a00 ;
+  }
 }
 
 #nav {
