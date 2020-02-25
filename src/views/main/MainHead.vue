@@ -1,22 +1,7 @@
 <template>
   <div>
     <!--头部-->
-    <van-sticky>
-      <van-row justify="center" align="center" style="background-color: #fed700;">
-        <van-col span="4">
-          <van-icon name="scan" size="24" color="#fff" style="margin-top: 14px;"/></van-col>
-        <van-col span="16">
-          <van-search
-            shape="round"
-            background="gold"
-            placeholder="请输入商品名称"
-          />
-        </van-col>
-        <van-col span="4">
-          <van-icon name="chat-o" size="24" color="#fff" style="margin-top: 14px;"/>
-        </van-col>
-      </van-row>
-    </van-sticky>
+    <Head/>
     <img :src="bannerPic" style="width: 100%;"/>
   </div>
 </template>
@@ -25,6 +10,9 @@
 export default {
   // 首页头部组件
   name: 'HomeHead',
+  components: {
+    Head: () => import('@/views/Head.vue') // 引入头部的组件
+  },
   data () {
     return {
       bannerPic: require('@/assets/BANNER.png') // banner图片

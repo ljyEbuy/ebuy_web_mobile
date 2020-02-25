@@ -1,0 +1,115 @@
+<template>
+  <div>
+    <!--顶部-->
+    <van-nav-bar
+      title="注册页面"
+      fixed
+    >
+    </van-nav-bar>
+    <!--中间内容-->
+    <div style="margin-top:50px;padding-bottom: 50px;">
+      <van-form @submit="onSubmit">
+        <van-field
+          v-model="form.username"
+          name="username"
+          label="用户名"
+          placeholder="用户名"
+          required
+          clearable
+          :rules="[{ required: true, message: '请填写用户名' }]"
+        />
+        <van-field
+          v-model="form.password"
+          type="password"
+          name="password"
+          label="密码"
+          placeholder="密码"
+          required
+          clearable
+          :rules="[{ required: true, message: '请填写密码' }]"
+        />
+        <van-field
+          v-model="form.name"
+          name="name"
+          label="姓名"
+          required
+          clearable
+          :rules="nameRules"
+        />
+        <van-field name="sex" label="性别" :rules="[{ required: true, message: '请填写性别' }]">
+          <template #input>
+            <van-radio-group v-model="form.sex" direction="horizontal">
+              <van-radio name="1">男</van-radio>
+              <van-radio name="2">女</van-radio>
+            </van-radio-group>
+          </template>
+        </van-field>
+        <van-field
+          v-model="form.inviteCode"
+          name="inviteCode"
+          label="邀请码"
+          required
+          clearable
+          :rules="nameRules"
+        />
+        <div style="margin: 16px;">
+          <van-button round block type="info" native-type="submit">
+            注册
+          </van-button>
+        </div>
+      </van-form>
+      <div style="text-align: right;padding-right: 24px;"><router-link to="/Login">已经账户？请登陆</router-link></div>
+    </div>
+  </div>
+</template>
+
+<script>
+
+export default {
+  name: 'Login',
+  data () {
+    this.nameRules = [
+      { required: true, message: '请填写姓名' },
+      { validator: this.validateName, message: '姓名长度不能超过10个字符' }
+    ];
+    return {
+      form: {
+        username: '',
+        password: '',
+        name: '',
+        sex: '',
+        inviteCode: ''
+      }
+    }
+  },
+  methods: {
+    onSubmit (values) { // 注册
+      this.$axios
+        .post('/api/shop/customer/reg', JSON.stringify(values), {
+          params: {
+            inviteCode: this.form.inviteCode
+          }
+        })
+        .then(response => { // 获取返回数据
+          const msg = response.data;
+          if (msg.code === 0) {
+            this.$dialog.alert({
+              title: '系统提示',
+              message: '注册成功'
+            }).then(() => {
+              this.$router.push('/Customer');
+            });
+          } else { // 如果登陆失败
+            this.$toast(msg.msg);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }
+}
+</script>
+<style>
+
+</style>

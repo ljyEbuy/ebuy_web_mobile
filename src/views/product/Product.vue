@@ -40,9 +40,10 @@
     <!--底部-->
     <van-goods-action>
       <van-goods-action-icon icon="wap-home-o" to="/" text="首页"/>
-      <van-goods-action-icon icon="cart-o" text="购物车" info="5" to="/Cart"/>
+<!--      <van-goods-action-icon icon="cart-o" text="购物车" info="5" to="/Cart"/>-->
+      <van-goods-action-icon icon="cart-o" text="购物车"  to="/Cart"/>
       <van-goods-action-button type="warning" @click="showCartDialog" text="加入购物车"/>
-      <van-goods-action-button type="danger" text="立即购买"/>
+      <!--<van-goods-action-button type="danger" text="立即购买"/>-->
     </van-goods-action>
   </div>
 </template>
