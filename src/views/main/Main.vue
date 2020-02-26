@@ -13,7 +13,7 @@
         />
       </van-tab>
       <van-tab :title="item.name" :key="item.id" :name="item.id"  v-for="item in productTypes" class="home_tab_producttype">
-        <MainProductType
+        <MainProductTypeOfPage
           :ref="'productType'+item.id"
           :productTypeId="productTypeIdByTab"
         />
@@ -29,7 +29,8 @@ export default {
   components: {
     MainHead: () => import('@/views/main/MainHead.vue'), // 引入首页头部的组件
     MainBody: () => import('@/views/main/MainBody.vue'), // 引入首页默认的主组件
-    MainProductType: () => import('@/views/main/MainProductType.vue') // 引入各栏目组件的对象
+    // MainProductTypeOfScoll: () => import('@/views/main/MainProductTypeOfScoll.vue'), // 引入各栏目组件（不分页，滑动到底部更新）的对象
+    MainProductTypeOfPage: () => import('@/views/main/MainProductTypeOfPage.vue') // 引入各栏目组件(分页)的对象
   },
   data () {
     return {

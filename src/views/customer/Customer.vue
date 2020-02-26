@@ -86,6 +86,10 @@ export default {
           const msg = response.data;
           if (msg.code === 0) {
             this.customer = msg.data;
+            // eslint-disable-next-line eqeqeq
+            if (this.customer != null && this.customer.picUrl != null && this.customer.picUrl != '') { // 如果图片不为空
+              this.$set(this.customer, 'picUrl', this.customer.picUrl + '?' + Math.random());
+            }
           } else { // 如果验证失败
             this.$dialog.alert({
               title: '标题',

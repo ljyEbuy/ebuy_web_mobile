@@ -14,12 +14,9 @@
         :gutter="5"
         :column-num="2">
         <van-grid-item style="text-align: center;" class="van-ellipsis" v-for="product in products" :key="product.id" :to="{path:'/Product',query:{productId:product.id}}">
-          <van-image :src="product.picUrl" lazy-load height="100" fit="scale-down"/>
-          <div style="width: 90%;" class="van-ellipsis">{{product.name}}</div>
-          <van-row gutter="10" style="font-size: 12px;">
-            <van-col span="12"><span style="color:red;">￥{{product.price}}</span></van-col>
-            <van-col span="12"><span style="color: darkgrey;text-decoration:line-through;">￥{{product.originalPrice}}</span></van-col>
-          </van-row>
+          <ProductComponent
+            :product="product"
+          />
         </van-grid-item>
       </van-grid>
     </van-list>
@@ -28,8 +25,11 @@
 
 <script>
 export default {
-  // 专门打开产品栏目对应的产品
-  name: 'HomeProductType',
+  // 用滑动到底部更新来展示产品栏目的信息
+  name: 'MainProductTypeOfScoll',
+  components: {
+    ProductComponent: () => import('@/components/ProductComponent.vue') // 引入单个产品展示的组件
+  },
   props: {
     productTypeId: { // 获取从父组件传递过来的当前选择的值
       type: Number,
@@ -101,6 +101,9 @@ export default {
         this.finished = true; // 表示加载完成
       }
     }
+  },
+  mounted () {
+    // this.getProducts();
   }
 }
 </script>

@@ -16,9 +16,10 @@
         </van-sidebar>
       </van-col>
       <van-col span="18" style="padding:0 3px;">
-        <MainProductType
+        <MainProductTypeOfScoll
           ref="productView"
           :productTypeId="productTypeIdByTab"
+          @hook:mounted="getProductTypes"
         />
       </van-col>
     </van-row>
@@ -31,7 +32,7 @@ export default {
   name: 'ProductType',
   components: {
     Head: () => import('@/views/Head.vue'), // 引入头部的组件
-    MainProductType: () => import('@/views/main/MainProductType.vue') // 引入各栏目组件的对象
+    MainProductTypeOfScoll: () => import('@/views/main/MainProductTypeOfScoll.vue') // 用滑动到底部更新来展示产品栏目的信息
   },
   data () {
     return {
@@ -46,18 +47,19 @@ export default {
         .get('/api/shop/producttype')
         .then(response => { // 获取返回数据
           const msg = response.data;
-          if (msg.code === 0) {
+          // eslint-disable-next-line
+          if (msg.code == 0) {
             this.productTypes = msg.data;
             if (this.productTypeIdByTab == null) { // 如果当前没有选中项，即第一次打开该页面
               this.productTypeIdByTab = this.productTypes[0].id;
-              this.$refs.productView.initProducts(); // 手动刷新右侧内容
+              this.$refs.productView.initProducts(); // 手动刷新右侧内容。注意，这里必须配合 @hook:mounted="getProductTypes"使用。否则子组件还未加载完的话，这里调用会出现错误
             }
           } else {
-            this.$dialog.alert(msg.msg);
+            this.$toast(msg.msg);
           }
         })
         .catch(error => {
-          this.$dialog.alert(error);
+          this.$toast(error);
         });
     },
     tabClick (index, productTypeId) { // 点击选项卡事件
@@ -68,7 +70,7 @@ export default {
     }
   },
   mounted () {
-    this.getProductTypes();// 获取产品栏目集合
+    // this.getProductTypes();// 获取产品栏目集合
   }
 }
 </script>

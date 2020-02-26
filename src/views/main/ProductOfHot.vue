@@ -8,12 +8,9 @@
           justify="space-between"
           :column-num="2">
           <van-grid-item  class="van-ellipsis" style="text-align: center;" v-for="product in products" :key="product.id" :to="{path:'/Product',query:{productId:product.id}}">
-            <van-image :src="product.picUrl" lazy-load height="100" fit="scale-down"/>
-            <div style="width: 90%;" class="van-ellipsis">{{product.name}}</div>
-            <van-row gutter="10" style="font-size: 12px;">
-              <van-col span="12"><span style="color:red;">￥{{product.price}}</span></van-col>
-              <van-col span="12"><span style="color: darkgrey;text-decoration:line-through;">￥{{product.originalPrice}}</span></van-col>
-            </van-row>
+            <ProductComponent
+              :product="product"
+            />
           </van-grid-item>
         </van-grid>
         <!--分页组件-->
@@ -33,11 +30,14 @@
 export default {
   // 热门商品组件
   name: 'ProductOfHot',
+  components: {
+    ProductComponent: () => import('@/components/ProductComponent.vue') // 引入单个产品展示的组件
+  },
   data () {
     return {
       pagination: { // 记录分页数据
         // 分页-传递到服务端的数值
-        limit: 10, // 每页的最大记录数
+        limit: 6, // 每页的最大记录数
         page: 1, // 当前页
         total: 0 // 总记录数，分页-服务端返回的数值
       },

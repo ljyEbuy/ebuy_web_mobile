@@ -34,7 +34,10 @@
               {{shoppingCartItem.product.name}}
             </div>
             <div style="text-align: left;color:red;line-height: 30px;">￥{{shoppingCartItem.product.price}}</div>
-            <div style="text-align: left;line-height: 16px;color:darkgrey;font-style:italic;font-size: 12px;"><del>￥{{shoppingCartItem.product.originalPrice}}</del></div>
+            <div style="text-align: left;line-height: 16px;color:darkgrey;font-style:italic;font-size: 12px;">
+              <del v-if="shoppingCartItem.product.price!=shoppingCartItem.product.originalPrice">￥{{shoppingCartItem.product.originalPrice}}</del>
+              <span v-else>暂无优惠</span>
+            </div>
             <div style="text-align: left;margin-top:5px;line-height: 20px;height:20px;">
               <van-stepper v-model="shoppingCartItem.number" input-width="40px" integer @change="numberChange($event,shoppingCartItem.product.id)"/>
             </div>
