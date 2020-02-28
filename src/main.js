@@ -7,6 +7,7 @@ import store from './store'
 import axios from 'axios'
 
 // 导入Vant组件
+// 说明： ImagePreview不能在这里引用，要在使用该组件的地方引用，否则无效
 import Vant, { Lazyload } from 'vant'
 import 'vant/lib/index.css'
 
@@ -30,6 +31,13 @@ axios.defaults.baseURL = myVariable.baseUrl// 设置初始URL
 axios.defaults.withCredentials = true // 跨域携带cookie
 // 挂在在vue的原型上
 Vue.prototype.$axios = axios
+
+// 用于在前端过滤产品的价格，保留两位小数。否则服务端传递过来的，如12.00，会自动去掉两位小数
+// 用法：如{{product.price | decimalFilter}}
+Vue.filter('decimalFilter', function (value) {
+  value = Number(value);
+  return value.toFixed(2);
+})
 
 Vue.config.productionTip = false
 

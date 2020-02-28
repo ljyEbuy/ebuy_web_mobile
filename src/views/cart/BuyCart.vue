@@ -140,7 +140,7 @@ export default {
           const msg = response.data;
           if (msg.code === 0) {
             this.$set(this.form, 'sendName', msg.data.name);
-            this.$set(this.form, 'sendZip', String(msg.data.zip));
+            this.$set(this.form, 'sendZip', msg.data.zip);
             this.$set(this.form, 'sendTel', msg.data.tel);
             this.$set(this.form, 'sendAddress', msg.data.address);
           } else { // 如果验证失败
@@ -153,7 +153,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          this.$toast(error);
         });
     },
     getCart () { // 获取购物车信息
@@ -178,7 +178,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          this.$toast(error);
         });
     },
     onClickLeft () { // 当点击返回时
@@ -202,7 +202,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          this.$toast(error);
         });
     }
   },

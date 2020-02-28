@@ -18,7 +18,12 @@ const routes = [
         component: () => import('@/views/main/Main.vue')
       },
       {
-        path: '/ProductType', // 产品
+        path: '/Search', // 搜索
+        name: 'Search',
+        component: () => import('@/views/search/Search.vue')
+      },
+      {
+        path: '/ProductType', // 产品栏目
         name: 'ProductType',
         component: () => import('@/views/producttype/ProductType.vue')
       },

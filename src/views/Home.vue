@@ -9,6 +9,7 @@
     >
       <van-tabbar-item icon="wap-home-o" to="/">首页</van-tabbar-item>
       <van-tabbar-item icon="apps-o" to="/ProductType">分类</van-tabbar-item>
+      <van-tabbar-item icon="search" to="/Search">搜索</van-tabbar-item>
       <van-tabbar-item icon="shopping-cart-o" to="/Cart">购物车</van-tabbar-item>
       <van-tabbar-item icon="user-o" to="/Customer">我的</van-tabbar-item>
     </van-tabbar>

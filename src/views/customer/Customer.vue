@@ -11,7 +11,7 @@
       <van-row  style="padding:5px;border-bottom:1px solid #ebedf0;">
         <!--个人头像-->
         <van-col span="8" gutter="20" style="text-align: center;">
-          <img v-if="customer!=null&&customer.picUrl!=null&&customer.picUrl!=''" :src="customer.picUrl" style="width:90%;height: 100px;"/>
+          <img v-if="customer!=null&&customer.picUrl!=null&&customer.picUrl!=''" :src="customer.picUrl" style="width:90%;height: 100px;" @click="showPhoto(customer.picUrl)"/>
           <img v-else :src="noPic" style="width:90%;height: 100px;"/>
           <!--<van-image :src="product.picUrl" lazy-load width="100%" fit="scale-down"/>-->
         </van-col>
@@ -69,6 +69,7 @@
 </template>
 
 <script>
+import { ImagePreview } from 'vant';
 
 export default {
   name: 'Login',
@@ -118,8 +119,11 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          this.$toast(error);
         });
+    },
+    showPhoto (picUrl) { // 展示图片
+      ImagePreview([picUrl]); // 当点击图片时，预览该图片
     }
   },
   mounted () {

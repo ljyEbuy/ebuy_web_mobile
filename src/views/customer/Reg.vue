@@ -45,12 +45,13 @@
           </template>
         </van-field>
         <van-field
+          v-if="webConfig.inviteCodeNeedOfCustomer=='true'"
           v-model="form.inviteCode"
           name="inviteCode"
           label="邀请码"
+          placeholder="必须有邀请码才能注册"
           required
           clearable
-          :rules="nameRules"
         />
         <div style="margin: 16px;">
           <van-button round block type="info" native-type="submit">
@@ -73,6 +74,7 @@ export default {
       { validator: this.validateName, message: '姓名长度不能超过10个字符' }
     ];
     return {
+      webConfig: {}, // 网站配置信息
       form: {
         username: '',
         password: '',
@@ -104,9 +106,26 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          this.$toast(error);
+        });
+    },
+    getWebConfig () { // 读取网站配置信息
+      this.$axios
+        .get('/api/shop/webconfig')
+        .then(response => { // 获取返回数据
+          const msg = response.data;
+          if (msg.code === 0) {
+            // this.webConfig = msg.data;
+            this.$set(this.webConfig, 'inviteCodeNeedOfCustomer', String(msg.data.inviteCodeNeedOfCustomer));
+          }
+        })
+        .catch(error => {
+          this.$toast(error);
         });
     }
+  },
+  mounted () {
+    this.getWebConfig(); // 读取配置信息
   }
 }
 </script>

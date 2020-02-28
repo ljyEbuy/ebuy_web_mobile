@@ -3,7 +3,7 @@
     <Head/>
     <!--主体部分-->
     <van-row  style="padding:5px;padding-bottom: 50px;">
-      <!--商品图片-->
+      <!--产品栏目列表-->
       <van-col span="6">
         <van-sidebar v-model="activeKey">
           <van-sidebar-item
@@ -15,6 +15,7 @@
             v-for="item in productTypes"/>
         </van-sidebar>
       </van-col>
+      <!--产品栏目对应的产品列表-->
       <van-col span="18" style="padding:0 3px;">
         <MainProductTypeOfScoll
           ref="productView"

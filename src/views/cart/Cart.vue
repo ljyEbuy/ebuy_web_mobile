@@ -5,8 +5,10 @@
       title="我的购物车"
       fixed
       left-text="返回"
+      right-text="清空购物车"
       left-arrow
       @click-left="onClickLeft"
+      @click-right="clearCart"
     >
     </van-nav-bar>
     <!--中间内容-->
@@ -159,6 +161,35 @@ export default {
       }).catch(() => {
         // on cancel
       });
+    },
+    clearCart () { // 清空购物车
+      if (this.cart != null && this.cart.list != null && this.cart.list.length > 0) {
+        this.$dialog.confirm({
+          title: '系统提示',
+          message: '是否清空购物车'
+        }).then(() => {
+          this.$axios
+            .delete('/api/shop/cart/clear')
+            .then(response => { // 获取返回数据
+              const msg = response.data;
+              // eslint-disable-next-line eqeqeq
+              if (msg.code == 0) {
+                this.cart.list = []; // 清空本地购物车
+              } else {
+                this.$dialog.alert({
+                  message: msg.msg
+                })
+              }
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        }).catch(() => {
+          // on cancel
+        });
+      } else {
+        this.$toast('购物车中没有商品可以清空');
+      }
     }
   },
   mounted () {

@@ -14,15 +14,15 @@
       <img v-if="customer!=null&&customer.picUrl!=null&&customer.picUrl!=''" :src="customer.picUrl" style="width:100%;"/>
       <img v-else :src="noPic" style="width:100%;"/>
       <van-form>
-        <div style="margin: 16px;">
+        <div style="margin: 16px;text-align: center;">
           <van-uploader
             v-model="fileList"
             name="file"
-            :after-read="upload"
+            :after-read="afterRead"
             :max-count="1"/>
-         <!-- <van-button round block type="info" native-type="submit">
+         <van-button round block type="info" @click="uploadPhoto">
             上传头像
-          </van-button>-->
+          </van-button>
         </div>
       </van-form>
     </div>
@@ -39,6 +39,7 @@ export default {
       { validator: this.validateName, message: '姓名长度不能超过10个字符' }
     ];
     return {
+      file: null, // 获取上传的图片对象
       noPic: require('@/assets/nopic.jpg'), // 没有头像时的图片
       fileList: [], // 存储本地选择上传图片的路径
       customer: {}
@@ -68,13 +69,16 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          this.$toast(error);
         });
     },
-    upload (file) { // 将图片上传
+    afterRead (file) { // 将图片上传
+      this.file = file;
+    },
+    uploadPhoto () { // 执行图片上传
       // 此时可以自行将文件上传至服务器
       const data = new FormData(); // 创建form对象
-      data.append('file', file.file); // 通过append向form对象添加数据
+      data.append('file', this.file.file); // 通过append向form对象添加数据
       const config = {
         headers: { 'Content-Type': 'multipart/form-data' }
       }; // 添加请求头

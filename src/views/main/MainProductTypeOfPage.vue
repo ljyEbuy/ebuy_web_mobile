@@ -77,7 +77,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          this.$toast(error);
         });
     },
     pageChange (value) { // 获取当前页码

@@ -7,6 +7,7 @@
           <van-icon name="scan" size="24" color="#fff" style="margin-top: 14px;"/></van-col>
         <van-col span="16">
           <van-search
+            @focus="$router.push('/Search')"
             shape="round"
             background="gold"
             placeholder="请输入商品名称"
