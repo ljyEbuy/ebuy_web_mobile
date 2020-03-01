@@ -45,6 +45,31 @@
           </template>
         </van-field>
         <van-field
+          v-model="form.tel"
+          name="tel"
+          type="tel"
+          label="联系电话"
+          required
+          clearable
+          :rules="[{ required: true, message: '请填写联系电话' }]"
+        />
+        <van-field
+          v-model="form.address"
+          name="address"
+          label="地址"
+          required
+          clearable
+          :rules="[{ required: true, message: '请填写地址' }]"
+        />
+        <van-field
+          v-model="form.zip"
+          name="zip"
+          label="邮编"
+          required
+          clearable
+          :rules="[{ required: true, message: '请填写邮编' }]"
+        />
+        <van-field
           v-if="webConfig.inviteCodeNeedOfCustomer=='true'"
           v-model="form.inviteCode"
           name="inviteCode"
@@ -54,7 +79,7 @@
           clearable
         />
         <div style="margin: 16px;">
-          <van-button round block type="info" native-type="submit">
+          <van-button round block type="info" native-type="submit" :disabled="disabledButton">
             注册
           </van-button>
         </div>
@@ -74,6 +99,7 @@ export default {
       { validator: this.validateName, message: '姓名长度不能超过10个字符' }
     ];
     return {
+      disabledButton: false, // 按钮是否可用
       webConfig: {}, // 网站配置信息
       form: {
         username: '',
@@ -86,6 +112,7 @@ export default {
   },
   methods: {
     onSubmit (values) { // 注册
+      this.disabledButton = true; // 将按钮改为不可用，防止客户多次提交
       this.$axios
         .post('/api/shop/customer/reg', JSON.stringify(values), {
           params: {
@@ -101,11 +128,13 @@ export default {
             }).then(() => {
               this.$router.push('/Customer');
             });
-          } else { // 如果登陆失败
+          } else { // 如果注册失败
+            this.disabledButton = false; // 将按钮改为可用状态
             this.$toast(msg.msg);
           }
         })
         .catch(error => {
+          this.disabledButton = false; // 将按钮改为可用状态
           this.$toast(error);
         });
     },

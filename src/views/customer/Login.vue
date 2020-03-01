@@ -16,7 +16,6 @@
           placeholder="用户名"
           required
           clearable
-          :rules="[{ required: true, message: '请填写用户名' }]"
         />
         <van-field
           v-model="form.password"
@@ -64,7 +63,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          this.$toast(error);
         });
     }
   }
