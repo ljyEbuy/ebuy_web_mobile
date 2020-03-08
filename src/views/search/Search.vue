@@ -93,9 +93,6 @@ export default {
           } else {
             this.$dialog.alert(msg.msg);
           }
-        })
-        .catch(error => {
-          this.$toast(error);
         });
     },
     search () { // 执行搜索，用于搜索框中的值变化时

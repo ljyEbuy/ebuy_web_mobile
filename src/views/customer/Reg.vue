@@ -99,7 +99,7 @@ export default {
       { validator: this.validateName, message: '姓名长度不能超过10个字符' }
     ];
     return {
-      disabledButton: false, // 按钮是否可用
+      disabledButton: false, // 提交按钮是否可用
       webConfig: {}, // 网站配置信息
       form: {
         username: '',
@@ -133,9 +133,9 @@ export default {
             this.$toast(msg.msg);
           }
         })
+        // eslint-disable-next-line handle-callback-err
         .catch(error => {
           this.disabledButton = false; // 将按钮改为可用状态
-          this.$toast(error);
         });
     },
     getWebConfig () { // 读取网站配置信息
@@ -147,9 +147,6 @@ export default {
             // this.webConfig = msg.data;
             this.$set(this.webConfig, 'inviteCodeNeedOfCustomer', String(msg.data.inviteCodeNeedOfCustomer));
           }
-        })
-        .catch(error => {
-          this.$toast(error);
         });
     }
   },

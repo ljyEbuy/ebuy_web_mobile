@@ -26,6 +26,9 @@
       <div style="margin-top:5px;font-size: 18px;font-weight: bold;">{{product.name}}</div>
       <div style="margin-top:5px;font-size: 12px;line-height: 20px;height:20px;">库存：{{product.repository}}</div>
       <div style="font-size: 12px;line-height: 20px;height:20px;">销量：{{product.salesVolume}}</div>
+      <div style="font-size: 12px;line-height: 20px;height:20px;">
+        推荐指数：<van-rate v-model="product.recommendation" readonly :size="16" style="height: 20px;padding-top: 2px;"/>
+      </div>
       <div style="margin-top:5px;font-size: 12px;line-height: 20px;color: darkgrey;">{{product.description}}</div>
     </div>
     <!--商品描述信息-->
@@ -74,9 +77,6 @@ export default {
             } else {
               this.$dialog.alert(msg.msg);
             }
-          })
-          .catch(error => {
-            console.log(error);
           });
       }
     },

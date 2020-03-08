@@ -61,9 +61,6 @@ export default {
           } else {
             this.$dialog.alert(msg.msg);
           }
-        })
-        .catch(error => {
-          console.log(error);
         });
     },
     pageChange (value) { // 获取当前页码

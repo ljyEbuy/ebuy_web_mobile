@@ -51,9 +51,6 @@ export default {
           } else {
             this.$dialog.alert(msg.msg);
           }
-        })
-        .catch(error => {
-          console.log(error);
         });
     },
     tabClick (name, title) { // 点击选项卡事件

@@ -16,6 +16,7 @@
         <van-grid-item style="text-align: center;" class="van-ellipsis" v-for="product in products" :key="product.id" :to="{path:'/Product',query:{productId:product.id}}">
           <ProductComponent
             :product="product"
+            :imageHeight="imageHeight"
           />
         </van-grid-item>
       </van-grid>
@@ -35,6 +36,12 @@ export default {
       type: Number,
       default () {
         return null;
+      }
+    },
+    imageHeight: { // 图片高度
+      type: String,
+      default () {
+        return '30vw';
       }
     }
   },
@@ -88,9 +95,6 @@ export default {
           } else {
             this.$dialog.alert(msg.msg);
           }
-        })
-        .catch(error => {
-          console.log(error);
         });
     },
     onLoad () { // 加载数据。如果是父组件第二次调用方法重置，则onload可能第一个执行

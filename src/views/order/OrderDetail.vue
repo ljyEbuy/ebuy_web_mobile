@@ -24,16 +24,16 @@
       <div  style="margin-top: 10px;background-color: white;">
         <template v-for="(productOrderDetail,index) in productOrder.productOrderDetails">
         <!--商品基本信息-->
-        <van-row :key="index" style="padding:5px;border-bottom:1px solid #ebedf0;">
+        <div :key="index" style="padding:5px;border-bottom:1px solid #ebedf0;display:-webkit-flex;display: flex;">
           <!--商品图片-->
-          <van-col span="12">
+          <div style="width: 140px;height: 120px;">
             <router-link :to="{path:'/Product',query:{productId:productOrderDetail.product.id}}">
-            <img :src="productOrderDetail.product.picUrl" style="width:90%;height: 120px;"/>
+            <img :src="productOrderDetail.product.picUrl" style="width:100%;height: 100%;"/>
             </router-link>
             <!--<van-image :src="product.picUrl" lazy-load width="100%" fit="scale-down"/>-->
-          </van-col>
+          </div>
           <!--商品数据-->
-          <van-col span="12">
+          <div style="font-size: 14px;width:calc(100% - 160px);padding-left:20px;">
             <div class="van-multi-ellipsis--l2" style="text-align: left;line-height: 24px;height:48px;" @click="$router.push({path:'/Product',query:{productId:productOrderDetail.product.id}})">{{productOrderDetail.product.name}}</div>
             <div style="text-align: left;cline-height: 30px;">
               <span style="font-size: 14px;color:red;">￥{{productOrderDetail.product.price}}</span>
@@ -42,8 +42,8 @@
             <div style="text-align: left;font-size: 14px;line-height: 30px;margin-top:20px;">
               总价:<span style="color:red;">￥{{productOrderDetail.priceTotal}}</span>
             </div>
-          </van-col>
-        </van-row>
+          </div>
+        </div>
         </template>
       </div>
 
@@ -123,19 +123,9 @@ export default {
           const msg = response.data;
           if (msg.code === 0) {
             this.productOrder = msg.data;
-          } else if (msg.code === -9) { // 如果没有登陆
-            this.$dialog.alert({
-              title: '系统提示',
-              message: '请先登陆'
-            }).then(() => {
-              this.$router.push('/Login'); // 跳转回登陆页面页面
-            });
           } else { // 如果是其他错误信息
             this.$dialog.alert(msg.msg);
           }
-        })
-        .catch(error => {
-          console.log(error);
         });
     },
     onClickLeft () { // 当点击返回时
@@ -167,9 +157,6 @@ export default {
               } else { // 如果修改失败
                 this.$toast(msg.msg);
               }
-            })
-            .catch(error => {
-              console.log(error);
             });
         }
       }, 1000);
@@ -189,9 +176,6 @@ export default {
             } else { // 如果修改失败
               this.$toast(msg.msg);
             }
-          })
-          .catch(error => {
-            console.log(error);
           });
       }).catch(() => {
         // on cancel

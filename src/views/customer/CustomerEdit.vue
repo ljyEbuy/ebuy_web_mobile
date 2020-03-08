@@ -111,17 +111,7 @@ export default {
           const msg = response.data;
           if (msg.code === 0) {
             this.initForm(msg.data); // 初始化表单信息
-          } else { // 如果验证失败
-            this.$dialog.alert({
-              title: '标题',
-              message: msg.msg
-            }).then(() => {
-              this.$router.push('/Login');
-            });
           }
-        })
-        .catch(error => {
-          console.log(error);
         });
     },
     onSubmit (values) { // 修改密码
@@ -137,9 +127,6 @@ export default {
           } else { // 如果修改失败
             this.$toast(msg.msg);
           }
-        })
-        .catch(error => {
-          console.log(error);
         });
     },
     validateName (value) { // 验证密码格式：长度

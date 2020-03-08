@@ -59,17 +59,7 @@ export default {
           const msg = response.data;
           if (msg.code === 0) {
             this.initForm(msg.data); // 初始化表单信息
-          } else { // 如果验证失败
-            this.$dialog.alert({
-              title: '标题',
-              message: msg.msg
-            }).then(() => {
-              this.$router.push('/Login');
-            });
           }
-        })
-        .catch(error => {
-          this.$toast(error);
         });
     },
     afterRead (file) { // 将图片上传

@@ -28,14 +28,15 @@
             <van-col span="4">
             </van-col>
           </van-row>
-          <van-row  style="padding:5px;border-bottom:1px solid #ebedf0;border-top:1px solid #ebedf0;">
+          <!--订单详细信息-->
+          <div style="padding:5px;border-bottom:1px solid #ebedf0;border-top:1px solid #ebedf0;display:-webkit-flex;display: flex;">
             <!--商品图片-->
-            <van-col span="8">
+            <div style="width: 120px;height: 100px;">
               <!--<img :src="order.productOrderDetails[0].product.picUrl" style="width:90%;height: 100px;"/>-->
-              <van-image :src="order.productOrderDetails[0].product.picUrl" lazy-load width="90%" height="100px" fit="fill"/>
-            </van-col>
-            <!--商品数据-->
-            <van-col span="16">
+              <van-image :src="order.productOrderDetails[0].product.picUrl" lazy-load width="100%" height="100%" fit="fill"/>
+            </div>
+            <!--订单数据-->
+            <div style="width:calc(100% - 130px);">
               <div class="van-multi-ellipsis">订单状态：
                 {{myVariable.orderTagMap[order.tag]}}
               </div>
@@ -53,8 +54,8 @@
               <div v-if="order.strikePrice!=null">成交金额：<span style="color:red;">￥{{order.strikePrice}}</span></div>
               <div v-else>商品总价：<span style="color:red;">￥{{order.totalPrice}}</span></div>
               <div class="van-ellipsis">下单时间：{{order.createTime}}</div>
-            </van-col>
-          </van-row>
+            </div>
+          </div>
         </div>
       </template>
       <!--分页组件-->
@@ -120,9 +121,6 @@ export default {
           } else {
             this.$dialog.alert(msg.msg);
           }
-        })
-        .catch(error => {
-          console.log(error);
         });
     },
     pageChange (value) { // 获取当前页码

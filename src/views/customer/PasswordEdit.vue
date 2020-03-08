@@ -92,9 +92,6 @@ export default {
           } else { // 如果修改失败
             this.$toast(msg.msg);
           }
-        })
-        .catch(error => {
-          console.log(error);
         });
     },
     validatePassword (value) { // 验证密码格式：长度

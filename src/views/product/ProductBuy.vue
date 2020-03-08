@@ -4,18 +4,18 @@
     <van-action-sheet v-model="showCart" :title="product.name" style="text-align: left;">
       <div class="content" style="padding-bottom: 50px;">
         <!--商品基本信息-->
-        <van-row style="padding:5px;border-bottom:1px solid #ebedf0;">
+        <div style="padding:5px;border-bottom:1px solid #ebedf0;display:-webkit-flex;display: flex;justify-content:center;">
           <!--商品图片-->
-          <van-col span="8">
-            <img :src="product.picUrl" style="width:90%;max-height: 120px;"/>
+          <div style="width: 120px;height: 90px;">
+            <img :src="product.picUrl" style="width:100%;height: 100%;"/>
             <!--<van-image :src="product.picUrl" lazy-load width="100%" fit="scale-down"/>-->
-          </van-col>
+          </div>
           <!--商品数据-->
-          <van-col span="16">
+          <div style="width:calc(100% - 130px);padding-left: 10px;">
             <div style="text-align: left;font-size: 20px;font-weight: bold;color:red;">￥{{product.price}}</div>
             <div style="text-align: left;margin-top:5px;font-size: 12px;line-height: 20px;height:20px;">库存：{{product.repository}}</div>
-          </van-col>
-        </van-row>
+          </div>
+        </div>
         <!--购买数量-->
         <van-cell title="数量" center>
           <!-- 使用 title 插槽来自定义标题 -->
@@ -82,9 +82,6 @@ export default {
               message: msg.msg
             })
           }
-        })
-        .catch(error => {
-          console.log(error);
         });
     }
   },

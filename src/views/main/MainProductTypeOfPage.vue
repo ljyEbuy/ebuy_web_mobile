@@ -75,9 +75,6 @@ export default {
           } else {
             this.$dialog.alert(msg.msg);
           }
-        })
-        .catch(error => {
-          this.$toast(error);
         });
     },
     pageChange (value) { // 获取当前页码

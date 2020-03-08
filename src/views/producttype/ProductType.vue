@@ -5,7 +5,7 @@
     <van-row  style="padding:5px;padding-bottom: 50px;">
       <!--产品栏目列表-->
       <van-col span="6">
-        <van-sidebar v-model="activeKey">
+        <van-sidebar v-model="activeKey" style="width: 100%;">
           <van-sidebar-item
             class="van-ellipsis"
             @click="tabClick($event,item.id)"
@@ -21,6 +21,7 @@
           ref="productView"
           :productTypeId="productTypeIdByTab"
           @hook:mounted="getProductTypes"
+          imageHeight="22vw"
         />
       </van-col>
     </van-row>
@@ -58,9 +59,6 @@ export default {
           } else {
             this.$toast(msg.msg);
           }
-        })
-        .catch(error => {
-          this.$toast(error);
         });
     },
     tabClick (index, productTypeId) { // 点击选项卡事件

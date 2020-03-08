@@ -21,16 +21,16 @@
       <div v-else style="padding-bottom: 50px;">
         <template v-for="(shoppingCartItem,index) in cart.list">
         <!--商品基本信息-->
-        <van-row :key="index" style="padding:5px;border-bottom:1px solid #ebedf0;">
+        <div :key="index" style="padding:12px;border-bottom:1px solid #ebedf0;display:-webkit-flex;display: flex;">
           <!--商品图片-->
-          <van-col span="12">
+          <div style="width: 140px;height: 120px;">
             <router-link :to="{path:'/Product',query:{productId:shoppingCartItem.product.id}}">
-            <img :src="shoppingCartItem.product.picUrl" style="width:90%;height: 120px;"/>
+            <img :src="shoppingCartItem.product.picUrl" style="width:100%;height: 100%;"/>
             </router-link>
             <!--<van-image :src="product.picUrl" lazy-load width="100%" fit="scale-down"/>-->
-          </van-col>
+          </div>
           <!--商品数据-->
-          <van-col span="12">
+          <div style="font-size: 14px;width:calc(100% - 150px);padding-left:20px; ">
             <div class="van-multi-ellipsis--l2" style="text-align: left;line-height: 24px;height:48px;" @click="$router.push({path:'/Product',query:{productId:shoppingCartItem.product.id}})">{{shoppingCartItem.product.name}}</div>
             <div style="text-align: left;cline-height: 30px;">
               <span style="font-size: 14px;color:red;">￥{{shoppingCartItem.product.price}}</span>
@@ -39,8 +39,8 @@
             <div style="text-align: left;font-size: 14px;line-height: 30px;margin-top:20px;">
               总价:<span style="color:red;">￥{{shoppingCartItem.priceTotal}}</span>
             </div>
-          </van-col>
-        </van-row>
+          </div>
+        </div>
         </template>
         <!--订单数据-->
         <van-cell title="订单信息" style=" background-color:#DDDDDD;">
@@ -112,6 +112,7 @@
         safe-area-inset-bottom
         @submit="$refs.orderForm.submit()"
         button-text="提交订单"
+        :loading="loadingButton"
       />
     </div>
   </div>
@@ -127,6 +128,7 @@ export default {
       { validator: this.validateName, message: '姓名长度不能超过10个字符' }
     ];
     return {
+      loadingButton: false, // 提交按钮是否加载中
       cartPic: require('@/assets/cart.png'), // cart图片
       form: {}, // 订单信息
       cart: {} // 购物车信息
@@ -143,17 +145,7 @@ export default {
             this.$set(this.form, 'sendZip', msg.data.zip);
             this.$set(this.form, 'sendTel', msg.data.tel);
             this.$set(this.form, 'sendAddress', msg.data.address);
-          } else { // 如果验证失败
-            this.$dialog.alert({
-              title: '标题',
-              message: msg.msg
-            }).then(() => {
-              this.$router.push('/Login');
-            });
           }
-        })
-        .catch(error => {
-          this.$toast(error);
         });
     },
     getCart () { // 获取购物车信息
@@ -176,15 +168,13 @@ export default {
           } else {
             this.$dialog.alert(msg.msg);
           }
-        })
-        .catch(error => {
-          this.$toast(error);
         });
     },
     onClickLeft () { // 当点击返回时
       this.$router.go(-1);
     },
     onSubmit (values) { // 提交订单
+      this.loadingButton = true;
       this.$axios // 将更新后的值传到服务端保存
         .post('/api/shop/order', JSON.stringify(values))
         .then(response => { // 获取返回数据
@@ -198,11 +188,13 @@ export default {
               this.$router.push({ path: '/order/OrderDetail', query: { orderNo: orderNo } });
             });
           } else { // 如果修改失败
+            this.loadingButton = false;
             this.$toast(msg.msg);
           }
         })
+        // eslint-disable-next-line handle-callback-err
         .catch(error => {
-          this.$toast(error);
+          this.loadingButton = false;
         });
     }
   },

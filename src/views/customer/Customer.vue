@@ -8,15 +8,16 @@
     </van-nav-bar>
     <!--中间内容-->
     <div style="margin-top:50px;padding-bottom: 50px;">
-      <van-row  style="padding:5px;border-bottom:1px solid #ebedf0;">
+      <!--个人资料-->
+      <div style="padding:5px;border-bottom:1px solid #ebedf0;display:-webkit-flex;display: flex;justify-content:center;">
         <!--个人头像-->
-        <van-col span="8" gutter="20" style="text-align: center;">
-          <img v-if="customer!=null&&customer.picUrl!=null&&customer.picUrl!=''" :src="customer.picUrl" style="width:90%;height: 100px;" @click="showPhoto(customer.picUrl)"/>
-          <img v-else :src="noPic" style="width:90%;height: 100px;"/>
+        <div  style="text-align: center;width:100px;height: 100px;">
+          <img v-if="customer!=null&&customer.picUrl!=null&&customer.picUrl!=''" :src="customer.picUrl"  style="width:100%;height: 100%;" @click="showPhoto(customer.picUrl)"/>
+          <img v-else :src="noPic" style="width:100%;height: 100%;"/>
           <!--<van-image :src="product.picUrl" lazy-load width="100%" fit="scale-down"/>-->
-        </van-col>
+        </div>
         <!--个人数据-->
-        <van-col span="16" style="text-align: left;font-size: 14px;line-height: 24px;">
+        <div style="width:calc(100% - 120px);text-align: left;font-size: 14px;line-height: 24px;padding-left: 5px;">
           <div class="van-multi-ellipsis" style="font-size: 20px;line-height: 30px;" >
             <template v-if="customer.username!=null">
               {{customer.username}}
@@ -41,8 +42,9 @@
           <div style="font-size: 12px;">
             订单数：{{customer.productOrderNumber}}
           </div>
-        </van-col>
-      </van-row>
+        </div>
+      </div>
+      <!--订单模块-->
       <van-cell-group title="我的订单">
         <van-grid>
           <!--待付款-->
@@ -91,17 +93,7 @@ export default {
             if (this.customer != null && this.customer.picUrl != null && this.customer.picUrl != '') { // 如果图片不为空
               this.$set(this.customer, 'picUrl', this.customer.picUrl + '?' + Math.random());
             }
-          } else { // 如果验证失败
-            this.$dialog.alert({
-              title: '标题',
-              message: msg.msg
-            }).then(() => {
-              this.$router.push('/Login');
-            });
           }
-        })
-        .catch(error => {
-          console.log(error);
         });
     },
     logout () { // 注销用户
@@ -117,9 +109,6 @@ export default {
               this.$router.push('/Login');
             });
           }
-        })
-        .catch(error => {
-          this.$toast(error);
         });
     },
     showPhoto (picUrl) { // 展示图片

@@ -61,9 +61,6 @@ export default {
           } else { // 如果登陆失败
             this.$toast(msg.msg);
           }
-        })
-        .catch(error => {
-          this.$toast(error);
         });
     }
   }

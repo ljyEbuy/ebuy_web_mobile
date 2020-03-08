@@ -4,7 +4,8 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 // 引入axios
-import axios from 'axios'
+// import axios from "axios"//因为要进行全局配置，所以这里不引入，直接引入配置好的axios
+import axios from '@/api/my/my_axios.js' // 用自己的全局设置axios代替
 
 // 导入Vant组件
 // 说明： ImagePreview不能在这里引用，要在使用该组件的地方引用，否则无效

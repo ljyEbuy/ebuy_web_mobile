@@ -22,16 +22,16 @@
       <div v-else>
         <template v-for="(shoppingCartItem,index) in cart.list">
         <!--商品基本信息-->
-        <van-row :key="index" style="padding:12px;border-bottom:1px solid #ebedf0;">
+        <div :key="index" style="padding:12px;border-bottom:1px solid #ebedf0;display:-webkit-flex;display: flex;">
           <!--商品图片-->
-          <van-col span="11">
+          <div style="width: 140px;height: 120px;">
             <router-link :to="{path:'/Product',query:{productId:shoppingCartItem.product.id}}">
-            <img :src="shoppingCartItem.product.picUrl" style="width:90%;height: 120px;"/>
+            <img :src="shoppingCartItem.product.picUrl" style="width:100%;height: 100%;"/>
             </router-link>
             <!--<van-image :src="product.picUrl" lazy-load width="100%" fit="scale-down"/>-->
-          </van-col>
+          </div>
           <!--商品数据-->
-          <van-col span="11" style="font-size: 14px;">
+          <div style="font-size: 14px;width:calc(100% - 160px);padding-left:20px;">
             <div class="van-multi-ellipsis--l2" style="text-align: left;font-size: 16px;line-height: 20px;height:40px;" @click="$router.push({path:'/Product',query:{productId:shoppingCartItem.product.id}})">
               {{shoppingCartItem.product.name}}
             </div>
@@ -43,12 +43,12 @@
             <div style="text-align: left;margin-top:5px;line-height: 20px;height:20px;">
               <van-stepper v-model="shoppingCartItem.number" input-width="40px" integer @change="numberChange($event,shoppingCartItem.product.id)"/>
             </div>
-          </van-col>
+          </div>
           <!--商品数据-->
-          <van-col span="2">
+          <div style="width: 20px;">
             <van-icon name="delete" size="20" color="red" style="margin-top:50px;" @click="removeProduct(shoppingCartItem.product.id)"/>
-          </van-col>
-        </van-row>
+          </div>
+        </div>
         </template>
         <!--购物车总计-->
         <van-cell-group>
@@ -104,9 +104,6 @@ export default {
           } else {
             this.$dialog.alert(msg.msg);
           }
-        })
-        .catch(error => {
-          console.log(error);
         });
     },
     onClickLeft () { // 当点击返回时
@@ -128,9 +125,6 @@ export default {
               message: msg.msg
             })
           }
-        })
-        .catch(error => {
-          console.log(error);
         });
     },
     removeProduct (productId) { // 移除商品
@@ -154,9 +148,6 @@ export default {
                 message: msg.msg
               })
             }
-          })
-          .catch(error => {
-            console.log(error);
           });
       }).catch(() => {
         // on cancel
@@ -180,9 +171,6 @@ export default {
                   message: msg.msg
                 })
               }
-            })
-            .catch(error => {
-              console.log(error);
             });
         }).catch(() => {
           // on cancel
