@@ -92,7 +92,9 @@ export default {
         { text: '待发货', value: '1' },
         { text: '待收货', value: '2' },
         { text: '已收货', value: '3' },
-        { text: '已完成', value: '4' }
+        { text: '已完成', value: '4' },
+        { text: '申请取消', value: '-1' },
+        { text: '已取消', value: '-21' }
       ],
       paymentTypeOption: [
         { text: '选择付款方式', value: '' },

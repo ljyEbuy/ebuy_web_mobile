@@ -4,7 +4,7 @@
     <van-swipe :autoplay="3000">
       <van-swipe-item v-for="(item, index) in products" :key="index" >
         <router-link :to="{path:'/Product',query:{productId:item.id}}">
-        <van-image :src="item.picUrl" style="width: 100%;" height="60vw"  fit="fill"/>
+        <van-image :src="item.picUrl" style="width: 100%;" height="70vw"  fit="fill"/>
         </router-link>
       </van-swipe-item>
     </van-swipe>

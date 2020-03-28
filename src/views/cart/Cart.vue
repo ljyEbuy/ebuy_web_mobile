@@ -69,11 +69,11 @@
           </van-cell>
         </van-cell-group>
         <van-row>
-          <van-col span="12" style="padding:0 10px;">
-            <!--<van-button type="primary" round block>继续购物</van-button>-->
-          </van-col>
-          <van-col span="12" style="padding:5px 10px;text-align: right;">
-            <van-button type="danger" to="/BuyCart">去结算</van-button>
+<!--          <van-col span="12" style="padding:0 10px;">-->
+<!--            <van-button type="primary" round block>继续购物</van-button>-->
+<!--          </van-col>-->
+          <van-col span="24" style="padding:5px 10px;text-align: right;">
+            <van-button color="linear-gradient(to right, #fed700, #ff976a)" block round  to="/BuyCart">去结算</van-button>
           </van-col>
         </van-row>
       </div>

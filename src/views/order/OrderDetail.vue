@@ -59,15 +59,15 @@
             <span>{{productOrder.createTime}}</span>
           </template>
         </van-cell>
+        <van-cell title="订单状态">
+          <template slot="default">
+            {{myVariable.orderTagMap[productOrder.tag]}}
+          </template>
+        </van-cell>
         <van-cell title="支付方式">
           <template slot="default">
             <span v-if="productOrder.paymentType==1">网上支付</span>
             <span v-if="productOrder.paymentType==2">货到付款</span>
-          </template>
-        </van-cell>
-        <van-cell title="订单状态">
-          <template slot="default">
-            {{myVariable.orderTagMap[productOrder.tag]}}
           </template>
         </van-cell>
         <van-cell title="付款状态">
@@ -75,6 +75,11 @@
             <van-tag v-if="productOrder.paymentStatus==0" type="danger">未付款</van-tag>
             <van-tag v-else-if="productOrder.paymentStatus==1"  type="success">已付款</van-tag>
             <van-tag v-else type="warning">已退款</van-tag>
+          </template>
+        </van-cell>
+        <van-cell title="物流状态">
+          <template slot="default">
+            {{myVariable.orderDeliverStatusMap[productOrder.deliverStatus]}}
           </template>
         </van-cell>
         <van-cell title="总价">
@@ -89,16 +94,12 @@
           </template>
         </van-cell>
       </van-cell-group>
-      <van-row style="background: white;">
-        <van-col span="12" style="padding:0 10px;">
-          <!--<van-button type="primary" round block>继续购物</van-button>-->
-        </van-col>
-        <van-col span="12" style="padding:5px 10px;text-align: right;">
+      <van-row type="flex" justify="end" style="background: white;padding: 5px 12px;">
+          <van-button  v-if="productOrder.tag>=0&&productOrder.tag<=1"  round  type="default" size="small" @click="cancelOrder" style="margin-left: 5px;">取消订单</van-button>
           <!--如果是在线支付，未付款状态-->
-          <van-button v-if="productOrder.paymentType==1&&productOrder.tag==0&&productOrder.paymentStatus==0" block round  type="danger" @click="payOrder">付款</van-button>
+          <van-button v-if="productOrder.paymentType==1&&productOrder.tag==0&&productOrder.paymentStatus==0" round  type="default" size="small" @click="payOrder" style="margin-left: 5px;">立即付款</van-button>
           <!--如果已经发货-->
-          <van-button v-if="productOrder.tag==2" block round  type="danger" @click="confirmReceive">确认收货</van-button>
-        </van-col>
+          <van-button v-if="productOrder.tag==2" round  type="default" size="small" @click="confirmReceive" style="margin-left: 5px;">确认收货</van-button>
       </van-row>
     </div>
   </div>
@@ -173,6 +174,25 @@ export default {
             if (msg.code === 0) {
               this.getOrder();
               // this.$router.replace({ path: '/order/OrderDetail', query: { orderNo: this.orderNo } });
+            } else { // 如果修改失败
+              this.$toast(msg.msg);
+            }
+          });
+      }).catch(() => {
+        // on cancel
+      });
+    },
+    cancelOrder () { // 取消订单
+      this.$dialog.confirm({
+        title: '系统提示',
+        message: '确认取消订单吗？此操作无法恢复'
+      }).then(() => { // 如果确认收货
+        this.$axios // 将更新后的值传到服务端保存
+          .patch('/api/shop/order/' + this.orderNo + '/cancel')
+          .then(response => { // 获取返回数据
+            const msg = response.data;
+            if (msg.code === 0) {
+              this.getOrder();
             } else { // 如果修改失败
               this.$toast(msg.msg);
             }

@@ -9,7 +9,17 @@
       @click-left="onClickLeft"
       @click-right="toProductContent"
     />
-    <van-image ref="vantImage" :src="product.picUrl" width="100%" fit="fill" style="margin-top: 50px;"/>
+   <!-- <van-image ref="vantImage" :src="product.picUrl" width="100%" fit="fill" style="margin-top: 50px;"/>-->
+    <van-swipe @change="onChangePreviewPicture">
+      <van-swipe-item v-for="(item, index) in product.previewPictures" :key="index"  @click="showPreviewPicture(product.previewPictures,index)">
+          <van-image :src="item" style="width: 100%;" height="70vw"  fit="fill"/>
+      </van-swipe-item>
+      <template #indicator>
+        <div class="custom-indicator">
+          {{ current+1 }}/{{product.previewPictures.length}}
+        </div>
+      </template>
+    </van-swipe>
     <!--商品基本信息信息-->
     <!--如果有价格优惠-->
     <template v-if="product.price!=product.originalPrice">
@@ -18,7 +28,7 @@
         <div><del>￥<span style="font-size: 12px;">{{product.originalPrice}}</span></del></div>
       </div>
     </template>
-    <div style="padding-left: 5%;text-align: left;">
+    <div style="padding:0 12px;text-align: left;">
       <!--如果没有价格优惠-->
       <template v-if="product.price==product.originalPrice">
         <div style="text-align: left;font-size: 28px;font-weight: bold;color:red;">￥{{product.price}}</div>
@@ -26,10 +36,11 @@
       <div style="margin-top:5px;font-size: 18px;font-weight: bold;">{{product.name}}</div>
       <div style="margin-top:5px;font-size: 12px;line-height: 20px;height:20px;">库存：{{product.repository}}</div>
       <div style="font-size: 12px;line-height: 20px;height:20px;">销量：{{product.salesVolume}}</div>
+      <div style="font-size: 12px;line-height: 20px;height:20px;">人气：{{product.click}}</div>
       <div style="font-size: 12px;line-height: 20px;height:20px;">
         推荐指数：<van-rate v-model="product.recommendation" readonly :size="16" style="height: 20px;padding-top: 2px;"/>
       </div>
-      <div style="margin-top:5px;font-size: 12px;line-height: 20px;color: darkgrey;">{{product.description}}</div>
+      <div style="margin-top:5px; text-align: justify;font-size: 12px;line-height: 20px;color: darkgrey;">{{product.description}}</div>
     </div>
     <!--商品描述信息-->
     <div id="product_content_div" style="padding-bottom: 50px;margin-top: 20px;">
@@ -52,7 +63,7 @@
 </template>
 
 <script>
-
+import { ImagePreview } from 'vant';
 export default {
   name: 'Product',
   components: {
@@ -60,8 +71,11 @@ export default {
   },
   data () {
     return {
+      current: 0, // 用于产品预览图切换
       showCart: false, // 显示是否购买的对话框
-      product: {} // 获取产品
+      product: { // 获取产品
+        previewPictures: [] // 这里加上，避免在从服务端读取到指定数组的时候，因为没定义无法在dom处{{product.previewPictures.length}}读取长度
+      }
     }
   },
   methods: {
@@ -88,6 +102,12 @@ export default {
     },
     showCartDialog () { // 当点击购物车时，显示购物车购物界面
       this.showCart = true;
+    },
+    onChangePreviewPicture (index) { // 当预览图改变时
+      this.current = index;
+    },
+    showPreviewPicture (previewPictures, startPosition) { // 展示产品预览图
+      ImagePreview(previewPictures, startPosition); // 当点击图片时，预览该图片
     }
   },
   mounted () {
@@ -95,11 +115,22 @@ export default {
   }
 }
 </script>
-<style>
+<style >
+  .custom-indicator {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    padding: 2px 5px;
+    font-size: 12px;
+    color:#FFFFFF;
+    background: rgba(0, 0, 0, 0.7);;
+  }
   /*设置文章内容（富文本）中的图片最大不超过手机屏幕*/
   #product_content{
     /*font-size:1.2rem!important;*/
     font-size: 14px;
+    text-align: justify;
+    padding: 0 12px
   }
   /*设置文章内容（富文本）中的图片最大不超过手机屏幕*/
   #product_content img{

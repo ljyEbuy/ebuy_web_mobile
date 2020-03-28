@@ -7,6 +7,8 @@ import store from './store'
 // import axios from "axios"//因为要进行全局配置，所以这里不引入，直接引入配置好的axios
 import axios from '@/api/my/my_axios.js' // 用自己的全局设置axios代替
 
+// 导入滚动插件，用于无缝滚动图片
+// import scroll from 'vue-seamless-scroll'
 // 导入Vant组件
 // 说明： ImagePreview不能在这里引用，要在使用该组件的地方引用，否则无效
 import Vant, { Lazyload } from 'vant'
@@ -15,6 +17,7 @@ import 'vant/lib/index.css'
 /* ljy创建的用来存放公共变量 */
 import myVariable from '@/api/my/my_variable.js'
 
+// Vue.use(scroll)
 // 使用Vant
 Vue.use(Lazyload)
 Vue.use(Vant)

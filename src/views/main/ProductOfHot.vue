@@ -1,5 +1,5 @@
 <template>
-      <!---今日新品-->
+      <!---热门商品-->
       <div style="background-color:#ffffff">
         <div style="color: gold;text-align: left;padding-left: 5px;padding-top: 3px;">热门商品</div>
         <van-grid
